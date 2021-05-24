@@ -6,20 +6,28 @@ import Home from './components/Home';
 import Logout from './components/Logout';
 import Forms from './components/Form';
 import Appointment from './components/Appointment';
+import PreLoader2 from './components/PreLoader';
+import PreLoader1 from './components/PreLoader1';
 function App() {
   return (
     <div className="App">
+      <header className="App-header">
+      {/* <PreLoader2 /> */}
+      <PreLoader1 />
+      
       <Router>
+      
       <Switch>
       <Route path="/" exact component={Login} />
       <Route path="/home" component={Home} />
       <Route path= "/logout" component={Logout} />
       <Route path= "/appointment" component={Appointment} />
-      <Route path="/login" exact component={Login} />
+      <Route path="/login" component={Login} />
       <Route path= "/form" component={Forms} />
       
     </Switch>
     </Router>
+    </header>
     </div>
   );
 }
