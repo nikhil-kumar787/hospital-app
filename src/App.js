@@ -5,6 +5,7 @@ import {BrowserRouter as Router,Route, Switch} from "react-router-dom";
 import Home from './components/Home';
 import Logout from './components/Logout';
 import Forms from './components/Form';
+import Appointment from './components/Appointment';
 function App() {
   return (
     <div className="App">
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" exact component={Login} />
       <Route path="/home" component={Home} />
       <Route path= "/logout" component={Logout} />
+      <Route path= "/appointment" component={Appointment} />
       <Route path="/login" exact component={Login} />
       <Route path= "/form" component={Forms} />
       
