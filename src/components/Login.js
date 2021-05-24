@@ -53,7 +53,11 @@ export default class Login extends React.Component{
     render() {
         console.log(localStorage.getItem('token'))
         console.log(this.state.loggedIn)
-       if(this.state.loggedIn){
+       if(this.state.loggedIn
+        
+        
+        
+        ){
         return <Redirect to="/home" />
     }
 
