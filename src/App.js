@@ -6,14 +6,16 @@ import Home from './components/Home';
 import Logout from './components/Logout';
 import Forms from './components/Form';
 import Appointment from './components/Appointment';
-import PreLoader2 from './components/PreLoader';
+
 import PreLoader1 from './components/PreLoader1';
+import LoginPage from './views/LoginPage/LoginPage';
+import LandingPage from './views/LandingPage/LandingPage';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
       {/* <PreLoader2 /> */}
-      <PreLoader1 />
+      {/* <PreLoader1 /> */}
       
       <Router>
       
@@ -24,10 +26,15 @@ function App() {
       <Route path= "/appointment" component={Appointment} />
       <Route path="/login" component={Login} />
       <Route path= "/form" component={Forms} />
+      <Route path= "/landingpage" component={LandingPage} />
+      
+      <Route path= "/loginpage" component={LoginPage} />
+
+
       
     </Switch>
     </Router>
-    </header>
+    {/* </header> */}
     </div>
   );
 }
