@@ -3,16 +3,18 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 // @material-ui/icons
-import Chat from "@material-ui/icons/Chat";
-import VerifiedUser from "@material-ui/icons/VerifiedUser";
-import Fingerprint from "@material-ui/icons/Fingerprint";
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import PersonPinIcon from '@material-ui/icons/PersonPin';
+import PanToolIcon from '@material-ui/icons/PanTool';
 // core components
 // import GridContainer from "components/Grid/GridContainer.js";
 import GridContainer from "../../../components/Grid/GridContainer";
 import GridItem from "../../../components/Grid/GridItem.js";
 import InfoArea from "../../../components/InfoArea/InfoArea.js";
-
 import styles from "../../../assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
+import "./ProductSection.css"
+import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
@@ -34,31 +36,46 @@ export default function ProductSection() {
       <div>
         <GridContainer>
           <GridItem xs={12} sm={12} md={4}>
+            
             <InfoArea
-              title="Free Chat"
-              description="Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough."
-              icon={Chat}
+              title="Hospitals Near Me"
+              description="All the hospital near you under once click!"
+              icon={LocalHospitalIcon}
               iconColor="info"
               vertical
             />
+              <Button variant="contained" color="primary" disableElevation>
+                 View Now
+              </Button>
+            
+            
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>
             <InfoArea
-              title="Verified Users"
-              description="Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough."
-              icon={VerifiedUser}
+              title="Donate Now"
+              description="Your penny can save a life. Please donate oxygen to needed, your donation will be transparent and acknoledged!"
+              icon={PanToolIcon}
               iconColor="success"
               vertical
             />
+             <Button variant="contained" color="primary" disableElevation>
+                 Donate Now
+            </Button>
           </GridItem>
           <GridItem xs={12} sm={12} md={4}>
             <InfoArea
-              title="Fingerprint"
-              description="Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough."
-              icon={Fingerprint}
-              iconColor="danger"
+              title="Doctors Near Me"
+              description="All available DOCTORS near you are one click away!"
+              icon={PersonPinIcon}
+              iconColor="primary"
               vertical
             />
+            <Link to ="/doctor">
+            
+            <Button variant="contained" color="primary" disableElevation>
+                 View Now
+            </Button>
+            </Link>
           </GridItem>
         </GridContainer>
       </div>

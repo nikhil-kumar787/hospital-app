@@ -11,6 +11,7 @@ import Appointment from './components/Appointment';
 import LoginPage from './views/LoginPage/LoginPage';
 import LandingPage from './views/LandingPage/LandingPage';
 import Doctor from './views/Doctorpage/Doctor';
+import Modal from './views/Doctorpage/Modal';
 function App() {
   return (
     <div className="App">
@@ -30,6 +31,7 @@ function App() {
       <Route path= "/landingpage" component={LandingPage} />
       <Route path= "/doctor" component={Doctor} />
       <Route path= "/loginpage" component={LoginPage} />
+      <Route path= "/modal" component={Modal} />
 
 
       

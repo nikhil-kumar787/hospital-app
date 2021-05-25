@@ -8,6 +8,8 @@ import CardHeader from "../../components/Card/CardHeader.js";
 import Button from "../../components/CustomButtons/Button.js";
 
 import { cardTitle } from "../../assets/jss/material-kit-react.js";
+import { Link } from "react-router-dom";
+
 
 const styles = {
   cardTitle,
@@ -22,6 +24,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function Cards() {
+ 
   const classes = useStyles();
   return (
     <Card className={classes.textCenter}>
@@ -32,7 +35,9 @@ export default function Cards() {
           With supporting text below as a
           natural lead-in to additional content.
         </p>
-        <Button color="primary">Book Appointment </Button>
+        <Link to ="/modal">
+        <Button color="primary">Book Appointment  </Button>
+        </Link>
       </CardBody>
      
     </Card>
