@@ -7,9 +7,10 @@ import Logout from './components/Logout';
 import Forms from './components/Form';
 import Appointment from './components/Appointment';
 
-import PreLoader1 from './components/PreLoader1';
+// import PreLoader1 from './components/PreLoader1';
 import LoginPage from './views/LoginPage/LoginPage';
 import LandingPage from './views/LandingPage/LandingPage';
+import Doctor from './views/Doctorpage/Doctor';
 function App() {
   return (
     <div className="App">
@@ -27,7 +28,7 @@ function App() {
       <Route path="/login" component={Login} />
       <Route path= "/form" component={Forms} />
       <Route path= "/landingpage" component={LandingPage} />
-      
+      <Route path= "/doctor" component={Doctor} />
       <Route path= "/loginpage" component={LoginPage} />
 
 
