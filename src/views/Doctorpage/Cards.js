@@ -9,7 +9,6 @@ import Button from "../../components/CustomButtons/Button.js";
 
 import { cardTitle } from "../../assets/jss/material-kit-react.js";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import withStyles from "@material-ui/core/styles/withStyles";
 import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
@@ -25,9 +24,6 @@ import TextField from "@material-ui/core/TextField";
 import modalStyle from "../../assets/jss/material-kit-react/modalStyle.js";
 
 import axios from "axios";
-=======
-
->>>>>>> 16f61ba2fd71c88b8a0fff9e407c2f02aace09d2
 
 const styles = {
   cardTitle,
@@ -55,15 +51,12 @@ const useStyles = makeStyles((theme) => ({
 //const useStyles = makeStyles(styles);
 
 export default function Cards() {
-<<<<<<< HEAD
   const [userlist, setUserlist] = useState([]);
   const [totaldr, setTotaldr] = useState([]);
   const [modal, setModal] = React.useState(false);
   const [userId, setUserId] = useState();
   const [drId, setDrId] = useState();
-=======
- 
->>>>>>> 16f61ba2fd71c88b8a0fff9e407c2f02aace09d2
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -172,7 +165,6 @@ export default function Cards() {
   };
 
   return (
-<<<<<<< HEAD
     <div>
       <div>
         <CardBody>
@@ -283,45 +275,6 @@ export default function Cards() {
           </Card>
         ))}
       </div>
-
-      {/* <div>
-        <CardBody>
-          {" "}
-          <h3>Total Doctor Available {totaldr}</h3>{" "}
-        </CardBody>
-        {userlist.map((row) => (
-          <Card className={classes.textCenter}>
-            <CardHeader color="danger">
-              {" "}
-              <h3>SPECIALISATION:{row.specialist}</h3>
-            </CardHeader>
-            <CardBody>
-              <h1 className={classes.cardTitle}>Dr.{row.name}</h1>
-              <p>Consulting Time: {row.timing}</p>
-              <p>Address: {row.address}</p>
-              <p>Contact No.: {row.phone}</p>
-              <p>Email: {row.email}</p>
-              <Button color="primary">Book Appointment </Button>
-            </CardBody>
-          </Card>
-        ))}
-      </div> */}
     </div>
-=======
-    <Card className={classes.textCenter}>
-      <CardHeader color="danger"> <h3>SPECIALISATION</h3></CardHeader>
-      <CardBody>
-        <h1 className={classes.cardTitle}>Special title treatment</h1>
-        <p>
-          With supporting text below as a
-          natural lead-in to additional content.
-        </p>
-        <Link to ="/modal">
-        <Button color="primary">Book Appointment  </Button>
-        </Link>
-      </CardBody>
-     
-    </Card>
->>>>>>> 16f61ba2fd71c88b8a0fff9e407c2f02aace09d2
   );
 }
