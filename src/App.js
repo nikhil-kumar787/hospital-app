@@ -8,6 +8,7 @@ import Forms from "./components/Form";
 import Appointment from "./components/Appointment";
 
 // import PreLoader1 from './components/PreLoader1';
+<<<<<<< HEAD
 import LoginPage from "./views/LoginPage/LoginPage";
 import LandingPage from "./views/LandingPage/LandingPage";
 import Doctor from "./views/Doctorpage/Doctor";
@@ -16,6 +17,12 @@ import Signupuser from "./views/Signup/Signupuser";
 import PrivateRoute from "./components/HOC/PrivateRoute";
 import Alldoctor from "./views/Doctorpage/Alldoctor";
 import Hospital from "./views/Hospital/Hospital";
+=======
+import LoginPage from './views/LoginPage/LoginPage';
+import LandingPage from './views/LandingPage/LandingPage';
+import Doctor from './views/Doctorpage/Doctor';
+import Modal from './views/Doctorpage/Modal';
+>>>>>>> 16f61ba2fd71c88b8a0fff9e407c2f02aace09d2
 function App() {
   return (
     <div className="App">
@@ -23,6 +30,7 @@ function App() {
       {/* <PreLoader1 /> */}
 
       <Router>
+<<<<<<< HEAD
         <Switch>
           <PrivateRoute path="/home" component={Home} />
           <PrivateRoute path="/appointment" component={Appointment} />
@@ -37,6 +45,20 @@ function App() {
           </header>
 
           <Route path="/logout" component={Logout} />
+=======
+      
+      <Switch>
+      <Route path="/" exact component={Login} />
+      <Route path="/home" component={Home} />
+      <Route path= "/logout" component={Logout} />
+      <Route path= "/appointment" component={Appointment} />
+      <Route path="/login" component={Login} />
+      <Route path= "/form" component={Forms} />
+      <Route path= "/landingpage" component={LandingPage} />
+      <Route path= "/doctor" component={Doctor} />
+      <Route path= "/loginpage" component={LoginPage} />
+      <Route path= "/modal" component={Modal} />
+>>>>>>> 16f61ba2fd71c88b8a0fff9e407c2f02aace09d2
 
           {/* <Route path="/signup" component={Signup} /> */}
           <Route path="/signup" component={Signupuser} />
