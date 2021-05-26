@@ -19,11 +19,12 @@ import Parallax from "../../components/Parallax/Parallax.js";
 import "./Doctor.css";
 
 import styles from "../../assets/jss/material-kit-react/views/profilePage.js";
-import Cards from "./Cards.js";
+
+import Alldoctorcards from "./Alldoctorcards.js";
 
 const useStyles = makeStyles(styles);
 
-export default function Doctor(props) {
+export default function Alldoctor(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const imageClasses = classNames(
@@ -76,7 +77,7 @@ export default function Doctor(props) {
               <GridItem xs={90} sm={80} md={40} className={classes.navWrapper}>
                 <div className="Card">
                   <div className="child">
-                    <Cards />
+                    <Alldoctorcards />
                   </div>
                   {/* <div className="child">
                     <Cards />

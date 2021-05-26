@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 //const useStyles = makeStyles(styles);
 
-export default function Cards() {
+export default function Alldoctorcards() {
   const [userlist, setUserlist] = useState([]);
   const [totaldr, setTotaldr] = useState([]);
   const [modal, setModal] = React.useState(false);
@@ -69,7 +69,7 @@ export default function Cards() {
         "My-Custom-Header": "foobar",
       };
       const req = await axios.get(
-        "https://capstone-health.herokuapp.com/user/available",
+        "https://capstone-health.herokuapp.com/user/alldoctor",
         { headers }
       );
       console.log(req.data);
@@ -168,7 +168,7 @@ export default function Cards() {
       <div>
         <CardBody>
           {" "}
-          <h3>Total Doctor Available {totaldr}</h3>{" "}
+          <h3>Total Doctors: {totaldr}</h3>{" "}
         </CardBody>
         {userlist.map((row) => (
           <Card className={classes.textCenter}>
@@ -186,7 +186,8 @@ export default function Cards() {
               <p>Address: {row.address}</p>
               <p>Contact No.: {row.phone}</p>
               <p>Email: {row.email}</p>
-              <p>id: {row._id}</p>
+
+              {/*               
               <div>
                 <Button
                   color="primary"
@@ -269,7 +270,7 @@ export default function Cards() {
                     </Button>
                   </DialogActions>
                 </Dialog>
-              </div>
+              </div> */}
             </CardBody>
           </Card>
         ))}

@@ -16,14 +16,14 @@ import GridItem from "../../components/Grid/GridItem.js";
 import HeaderLinks from "../../components/Header/HeaderLinks.js";
 import NavPills from "../../components/NavPills/NavPills.js";
 import Parallax from "../../components/Parallax/Parallax.js";
-import "./Doctor.css";
+import "./Hospital.css";
 
 import styles from "../../assets/jss/material-kit-react/views/profilePage.js";
-import Cards from "./Cards.js";
+import Hospitalcards from "./Hospitalcards.js";
 
 const useStyles = makeStyles(styles);
 
-export default function Doctor(props) {
+export default function Hospital(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const imageClasses = classNames(
@@ -76,7 +76,7 @@ export default function Doctor(props) {
               <GridItem xs={90} sm={80} md={40} className={classes.navWrapper}>
                 <div className="Card">
                   <div className="child">
-                    <Cards />
+                    <Hospitalcards />
                   </div>
                   {/* <div className="child">
                     <Cards />

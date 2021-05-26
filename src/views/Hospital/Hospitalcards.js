@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 //const useStyles = makeStyles(styles);
 
-export default function Cards() {
+export default function Hospitalcards() {
   const [userlist, setUserlist] = useState([]);
   const [totaldr, setTotaldr] = useState([]);
   const [modal, setModal] = React.useState(false);
@@ -69,17 +69,18 @@ export default function Cards() {
         "My-Custom-Header": "foobar",
       };
       const req = await axios.get(
-        "https://capstone-health.herokuapp.com/user/available",
+        "https://capstone-health.herokuapp.com/user/allhospital",
         { headers }
       );
       console.log(req.data);
-      setUserlist(req.data.details);
+      setUserlist(req.data.hospital);
       setTotaldr(req.data.totalDoctor);
     }
 
     fetchData();
   }, []);
 
+  console.log(userlist);
   const appointment = async (drid) => {
     // e.preventDefault();
     // console.log(as);
@@ -168,7 +169,7 @@ export default function Cards() {
       <div>
         <CardBody>
           {" "}
-          <h3>Total Doctor Available {totaldr}</h3>{" "}
+          <h3>Total Hospital Available : {totaldr}</h3>{" "}
         </CardBody>
         {userlist.map((row) => (
           <Card className={classes.textCenter}>
@@ -179,14 +180,21 @@ export default function Cards() {
             <CardBody>
               <CardHeader color="danger">
                 {" "}
-                <h3>SPECIALISATION:{row.specialist}</h3>
+                <h3> Hospital Name :{row.hospitalName}</h3>
               </CardHeader>
-              <h1 className={classes.cardTitle}>Dr.{row.name}</h1>
-              <p>Consulting Time: {row.timing}</p>
-              <p>Address: {row.address}</p>
+              <h1 className={classes.cardTitle}>24/7</h1>
+              <p>
+                <b>SPECIALISATION : {row.specialist} </b>
+              </p>
+              <p>Equipment : {row.equipment}</p>
+
               <p>Contact No.: {row.phone}</p>
               <p>Email: {row.email}</p>
-              <p>id: {row._id}</p>
+              <p>About: {row.about}</p>
+              <p>
+                Address: {row.address}, {row.city}
+              </p>
+
               <div>
                 <Button
                   color="primary"

@@ -46,17 +46,21 @@ export default function LandingPage(props) {
         {...rest}
       />
       {/* <Parallax filter image={require("assets/img/landing-bg.jpg").default}> */}
-      <Parallax filter image={require("../../assets/img/landing-bg.jpg").default}>
+      <Parallax
+        filter
+        image={require("../../assets/img/background.jpeg").default}
+      >
         <div className={classes.container}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-              <h1 className={classes.title}>Your Health is Our Responsibility</h1>
+              <h1 className={classes.title}>
+                Your Health is Our Responsibility
+              </h1>
               <h4>
-                We care for you, that's why we have brought a new
-                Health Care App that will help you to search Doctors and
-                Hospitals nearby you and you can easily book Appiontments.
-                You can also donate to the People who are in Emergency, with 
-                utmost transparency.
+                We care for you, that's why we have brought a new Health Care
+                App that will help you to search Doctors and Hospitals nearby
+                you and you can easily book Appiontments. You can also donate to
+                the People who are in Emergency, with utmost transparency.
               </h4>
               <br />
               <Button
