@@ -17,6 +17,7 @@ import LoginPage from "./views/LoginPage/LoginPage";
 import LandingPage from "./views/LandingPage/LandingPage";
 import Doctor from "./views/Doctorpage/Doctor";
 import Modal from "./views/Doctorpage/Modal";
+import Donation from "./views/Donation/Donation";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
           <PrivateRoute path="/doctor" component={Doctor} />
           <PrivateRoute path="/hospital" component={Hospital} />
           <PrivateRoute path="/alldoctor" component={Alldoctor} />
-
+          <PrivateRoute path="/alldonation" component={Donation} />
           <Route path="/landingpage" component={LandingPage} />
           <header className="App-header">
             <Route path="/" exact component={Login} />
