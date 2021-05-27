@@ -43,6 +43,15 @@ export default function HeaderLinks(props) {
             <Link to="/hospital" className={classes.dropdownLink}>
               Hospitals
             </Link>,
+            <Link to="/alldonation" className={classes.dropdownLink}>
+              Donation
+            </Link>,
+            <Link to="/doctor" className={classes.dropdownLink}>
+              Availabale Dr.
+            </Link>,
+            <Link to="/profile" className={classes.dropdownLink}>
+              Profile
+            </Link>,
           ]}
         />
       </ListItem>
