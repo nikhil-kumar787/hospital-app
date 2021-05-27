@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Profiler } from "react";
 import "./App.css";
 import Login from "./components/Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -18,6 +18,7 @@ import LandingPage from "./views/LandingPage/LandingPage";
 import Doctor from "./views/Doctorpage/Doctor";
 import Modal from "./views/Doctorpage/Modal";
 import Donation from "./views/Donation/Donation";
+import Profile from "./views/Profile/Profile";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <PrivateRoute path="/alldoctor" component={Alldoctor} />
           <PrivateRoute path="/alldonation" component={Donation} />
           <Route path="/landingpage" component={LandingPage} />
+          <PrivateRoute path="/profile" component={Profile} />
           <header className="App-header">
             <Route path="/" exact component={Login} />
             <Route path="/login" component={Login} />
