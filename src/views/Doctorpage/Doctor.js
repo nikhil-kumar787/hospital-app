@@ -78,21 +78,7 @@ export default function Doctor(props) {
                   <div className="child">
                     <Cards />
                   </div>
-                  {/* <div className="child">
-                    <Cards />
-                  </div>
-                  <div className="child">
-                    <Cards />
-                  </div>
-                  <div className="child">
-                    <Cards />
-                  </div>
-                  <div className="child">
-                    <Cards />
-                  </div>
-                  <div className="child">
-                    <Cards />
-                  </div> */}
+                 
                 </div>
               </GridItem>
             </GridContainer>

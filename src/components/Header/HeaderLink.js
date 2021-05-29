@@ -11,8 +11,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Tooltip from "@material-ui/core/Tooltip";
 import { Redirect } from "react-router-dom";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 // @material-ui/icons
 import { Apps, CloudDownload } from "@material-ui/icons";
@@ -26,14 +24,8 @@ import styles from "../../assets/jss/material-kit-react/components/headerLinksSt
 
 const useStyles = makeStyles(styles);
 
-export default function HeaderLinks(props) {
+export default function HeaderLink(props) {
   const classes = useStyles();
-
-  const logout = (e) => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    <Redirect to="/login" />;
-  };
 
   return (
     <List className={classes.list}>
@@ -65,24 +57,12 @@ export default function HeaderLinks(props) {
           ]}
         />
       </ListItem>
-
       <ListItem className={classes.listItem}>
-        <Button
-          onClick={logout}
-          href="/"
-          color="transparent"
-          className={classes.navLink}
-        >
-          <ExitToAppIcon />
-          Logout
+        <Button href="/login" color="transparent" className={classes.navLink}>
+          Login
         </Button>
       </ListItem>
 
-      <ListItem className={classes.listItem}>
-        <Button href="/profile" color="transparent" className={classes.navLink}>
-          <AccountCircleIcon style={{ fontSize: 40 }} /> Profile
-        </Button>
-      </ListItem>
       <ListItem className={classes.listItem}>
         {/*<Tooltip title="Delete">
           <IconButton aria-label="Delete">

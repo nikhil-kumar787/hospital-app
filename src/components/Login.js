@@ -70,7 +70,7 @@ export default class Login extends React.Component {
     console.log(localStorage.getItem("token"));
     console.log(this.state.loggedIn);
     if (this.state.loggedIn) {
-      return <Redirect to="/landingpage" />;
+      return <Redirect to="/home" />;
     }
 
     const paperStyle = {
@@ -134,7 +134,7 @@ export default class Login extends React.Component {
             </Typography>
             <Typography>
               {" "}
-              Do you have an account ?<Link href="#">Sign Up</Link>
+              Don't you have an account ?<Link href="/signup">Sign Up</Link>
             </Typography>
           </Paper>
         </Grid>

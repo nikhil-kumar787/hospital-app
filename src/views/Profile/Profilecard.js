@@ -229,7 +229,7 @@ export default function Profilecard() {
                   >
                     <Close className={classes.modalClose} />
                   </IconButton>
-                  <h4 className={classes.modalTitle}>Book Appointment</h4>
+                  <h4 className={classes.modalTitle}>Edit Profile</h4>
                 </DialogTitle>
                 <DialogContent
                   id="modal-slide-description"

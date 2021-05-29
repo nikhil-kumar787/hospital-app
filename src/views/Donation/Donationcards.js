@@ -16,6 +16,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
+import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 // @material-ui/icons
 import Close from "@material-ui/icons/Close";
 import CustomLinearProgress from "../../components/CustomLinearProgress/CustomLinearProgress.js";
@@ -59,26 +60,25 @@ export default function Donationcards() {
   const [userId, setUserId] = useState();
   const [orgId, setOrgId] = useState();
   const classes = useStyles();
+  async function fetchData() {
+    // console.log(localStorage.getItem("token"));
+    let mytoken = localStorage.getItem("token");
+    // let drId = localStorage.getItem("drId");
+
+    const headers = {
+      Authorization: `Bearer ${mytoken}`,
+      "My-Custom-Header": "foobar",
+    };
+    const req = await axios.get(
+      "https://capstone-health.herokuapp.com/donate/getall"
+      // { headers }
+    );
+    // console.log(req.data);
+    setUserlist(req.data.donateorg);
+    setTotaldr(req.data.totalOrganaization);
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      console.log(localStorage.getItem("token"));
-      let mytoken = localStorage.getItem("token");
-      // let drId = localStorage.getItem("drId");
-
-      const headers = {
-        Authorization: `Bearer ${mytoken}`,
-        "My-Custom-Header": "foobar",
-      };
-      const req = await axios.get(
-        "https://capstone-health.herokuapp.com/donate/getall"
-        // { headers }
-      );
-      console.log(req.data);
-      setUserlist(req.data.donateorg);
-      setTotaldr(req.data.totalOrganaization);
-    }
-
     fetchData();
   }, []);
 
@@ -90,28 +90,6 @@ export default function Donationcards() {
     console.log(orgId);
     setOrgId(orgId);
     setUserId(userid);
-
-    // const { name, email, password, category } = user;
-    // try {
-    //   await Axios.post("https://capstone-health.herokuapp.com/user/signup", {
-    //     name,
-    //     email,
-    //     password,
-    //     category,
-    //   })
-    //     .then((res) => {
-    //       console.log(res);
-    //       setIsingnup(true);
-    //       console.log(res.data);
-    //       window.alert("Successfully signup");
-    //       <Redirect to="/login" />;
-    //     })
-    //     .catch((err) => {
-    //       window.alert("Email id is already Exist");
-    //     });
-    // } catch (err) {
-    //   window.alert(err);
-    // }
   };
 
   const [userdata, setUserdata] = useState({
@@ -131,48 +109,7 @@ export default function Donationcards() {
 
     setUserdata({ ...userdata, [name]: value }); //// will take the name from line 15
   };
-  // const PostData = async (e) => {
-  //   e.preventDefault();
-  //   setModal(false);
-  //   const { name, email, phone, amount } = userdata;
-  //   console.log(TripOriginOutlined);
-  //   console.log(userId);
-  //   console.log(localStorage.getItem("token"));
-  //   let mytoken = localStorage.getItem("token");
-  //   // let drId = localStorage.getItem("drId");
 
-  //   const headers = {
-  //     Authorization: `Bearer ${mytoken}`,
-  //     "My-Custom-Header": "foobar",
-  //   };
-
-  //   try {
-  //     await axios
-  //       .post(
-  //         "https://capstone-health.herokuapp.com/user/donate",
-  //         {
-  //           name,
-  //           email,
-  //           phone,
-  //           orgId,
-  //           userId,
-  //         },
-  //         { headers }
-  //       )
-  //       .then((res) => {
-  //         console.log(res);
-  //         // setIsingnup(true);
-  //         console.log(res.data);
-  //         window.alert(" Appointment Booked Successfully ");
-  //         // <Redirect to="/login" />;
-  //       })
-  //       .catch((err) => {
-  //         window.alert("Oops! something went wrong please retry ");
-  //       });
-  //   } catch (err) {
-  //     window.alert(err);
-  //   }
-  // };
   const PostData = async (e) => {
     e.preventDefault();
     setModal(false);
@@ -180,7 +117,6 @@ export default function Donationcards() {
 
     // console.log(name, userId, phone, amount, orgId);
     let mytoken = localStorage.getItem("token");
-    console.log(mytoken);
     const headers = {
       Authorization: `Bearer ${mytoken}`,
       "My-Custom-Header": "foobar",
@@ -191,7 +127,7 @@ export default function Donationcards() {
     try {
       await axios
         .post(
-          "http://localhost:3000/user/donate",
+          "https://capstone-health.herokuapp.com/user/donate",
           {
             name,
             email,
@@ -205,6 +141,7 @@ export default function Donationcards() {
         .then((res) => {
           console.log(res);
           console.log(res.data);
+          fetchData();
           window.alert(" Thank you For Donation ");
         })
         .catch((err) => {
@@ -219,8 +156,8 @@ export default function Donationcards() {
     <div>
       <div>
         <CardBody>
-          {" "}
-          <h3>Total Organization: {totaldr}</h3>{" "}
+          {/* {" "}
+          <h3>Total Organization: {totaldr}</h3>{" "} */}
         </CardBody>
         {userlist.map((row) => (
           <Card className={classes.textCenter}>
@@ -235,6 +172,7 @@ export default function Donationcards() {
               </CardHeader>
               <h1 className={classes.cardTitle}>
                 Organization Name:{row.orgName}
+                <VerifiedUserIcon />
               </h1>
               <p>Fund Raised: {row.draised}</p>
               <CustomLinearProgress
@@ -248,9 +186,6 @@ export default function Donationcards() {
                 color="primary"
                 value={100 - (row.draised / row.drequired) * 100}
               />
-              <p>Bank Name.: {row.bank}</p>
-              <p>Ac No. {row.ac}</p>
-              <p>IFSC Code. {row.ifsc}</p>
               <p>
                 Address. {row.address}, {row.city} , {row.state}
               </p>
@@ -337,12 +272,6 @@ export default function Donationcards() {
                         onChange={handleInputs}
                       />
                     </form>
-
-                    <h3>
-                      <p>Bank Name.: {row.bank}</p>
-                      <p>Ac No. {row.ac}</p>
-                      <p>IFSC Code. {row.ifsc}</p>
-                    </h3>
                   </DialogContent>
                   <DialogActions
                     className={

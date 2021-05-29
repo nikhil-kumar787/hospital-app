@@ -187,7 +187,6 @@ export default function Cards() {
               <p>Address: {row.address}</p>
               <p>Contact No.: {row.phone}</p>
               <p>Email: {row.email}</p>
-              <p>id: {row._id}</p>
               <div>
                 <Button
                   color="primary"
