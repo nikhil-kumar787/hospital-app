@@ -16,14 +16,17 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
+import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 // @material-ui/icons
 import Close from "@material-ui/icons/Close";
+import CustomLinearProgress from "../../components/CustomLinearProgress/CustomLinearProgress.js";
 
 import TextField from "@material-ui/core/TextField";
 
 import modalStyle from "../../assets/jss/material-kit-react/modalStyle.js";
 
 import axios from "axios";
+import { TripOriginOutlined } from "@material-ui/icons";
 
 const styles = {
   cardTitle,
@@ -50,73 +53,50 @@ const useStyles = makeStyles((theme) => ({
 
 //const useStyles = makeStyles(styles);
 
-export default function Cards() {
+export default function Donationcards() {
   const [userlist, setUserlist] = useState([]);
   const [totaldr, setTotaldr] = useState([]);
   const [modal, setModal] = React.useState(false);
   const [userId, setUserId] = useState();
-  const [drId, setDrId] = useState();
-
+  const [orgId, setOrgId] = useState();
   const classes = useStyles();
+  async function fetchData() {
+    // console.log(localStorage.getItem("token"));
+    let mytoken = localStorage.getItem("token");
+    // let drId = localStorage.getItem("drId");
+
+    const headers = {
+      Authorization: `Bearer ${mytoken}`,
+      "My-Custom-Header": "foobar",
+    };
+    const req = await axios.get(
+      "https://capstone-health.herokuapp.com/donate/getall"
+      // { headers }
+    );
+    // console.log(req.data);
+    setUserlist(req.data.donateorg);
+    setTotaldr(req.data.totalOrganaization);
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      console.log(localStorage.getItem("token"));
-      let mytoken = localStorage.getItem("token");
-      let drId = localStorage.getItem("drId");
-
-      const headers = {
-        Authorization: `Bearer ${mytoken}`,
-        "My-Custom-Header": "foobar",
-      };
-      const req = await axios.get(
-        "https://capstone-health.herokuapp.com/user/available",
-        { headers }
-      );
-      console.log(req.data);
-      setUserlist(req.data.details);
-      setTotaldr(req.data.totalDoctor);
-    }
-
     fetchData();
   }, []);
 
-  const appointment = async (drid) => {
+  const donation = async (orgId) => {
     // e.preventDefault();
     // console.log(as);
     setModal(true);
     let userid = localStorage.getItem("userId");
-    console.log(drid);
-    setDrId(drid);
+    console.log(orgId);
+    setOrgId(orgId);
     setUserId(userid);
-
-    // const { name, email, password, category } = user;
-    // try {
-    //   await Axios.post("https://capstone-health.herokuapp.com/user/signup", {
-    //     name,
-    //     email,
-    //     password,
-    //     category,
-    //   })
-    //     .then((res) => {
-    //       console.log(res);
-    //       setIsingnup(true);
-    //       console.log(res.data);
-    //       window.alert("Successfully signup");
-    //       <Redirect to="/login" />;
-    //     })
-    //     .catch((err) => {
-    //       window.alert("Email id is already Exist");
-    //     });
-    // } catch (err) {
-    //   window.alert(err);
-    // }
   };
 
   const [userdata, setUserdata] = useState({
     name: "",
     email: "",
     phone: "",
+    amount: "",
   });
 
   let name, value;
@@ -133,28 +113,36 @@ export default function Cards() {
   const PostData = async (e) => {
     e.preventDefault();
     setModal(false);
-    const { name, email, phone } = userdata;
-    console.log(drId);
-    console.log(userId);
+    const { name, email, phone, amount } = userdata;
+
+    // console.log(name, userId, phone, amount, orgId);
+    let mytoken = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${mytoken}`,
+      "My-Custom-Header": "foobar",
+    };
+
+    let amnt = parseInt(amount);
 
     try {
       await axios
         .post(
-          "https://capstone-health.herokuapp.com/appointment/appointmentCreate",
+          "https://capstone-health.herokuapp.com/user/donate",
           {
             name,
             email,
             phone,
             userId,
-            drId,
-          }
+            orgId,
+            amount: amnt,
+          },
+          { headers }
         )
         .then((res) => {
           console.log(res);
-          // setIsingnup(true);
           console.log(res.data);
-          window.alert(" Appointment Booked Successfully ");
-          // <Redirect to="/login" />;
+          fetchData();
+          window.alert(" Thank you For Donation ");
         })
         .catch((err) => {
           window.alert("Oops! something went wrong please retry ");
@@ -168,8 +156,8 @@ export default function Cards() {
     <div>
       <div>
         <CardBody>
-          {" "}
-          <h3>Total Doctor Available {totaldr}</h3>{" "}
+          {/* {" "}
+          <h3>Total Organization: {totaldr}</h3>{" "} */}
         </CardBody>
         {userlist.map((row) => (
           <Card className={classes.textCenter}>
@@ -180,22 +168,37 @@ export default function Cards() {
             <CardBody>
               <CardHeader color="danger">
                 {" "}
-                <h3>SPECIALISATION:{row.specialist}</h3>
+                <h3>Emergency :{row.emergency}</h3>
               </CardHeader>
-              <h1 className={classes.cardTitle}>Dr.{row.name}</h1>
-              <p>Consulting Time: {row.timing}</p>
-              <p>Address: {row.address}</p>
-              <p>Contact No.: {row.phone}</p>
-              <p>Email: {row.email}</p>
+              <h1 className={classes.cardTitle}>
+                Organization Name:{row.orgName}
+                <VerifiedUserIcon />
+              </h1>
+              <p>Fund Raised: {row.draised}</p>
+              <CustomLinearProgress
+                variant="determinate"
+                color="primary"
+                value={(row.draised / row.drequired) * 100}
+              />
+              <p>Fund Required: {row.drequired}</p>
+              <CustomLinearProgress
+                variant="determinate"
+                color="primary"
+                value={100 - (row.draised / row.drequired) * 100}
+              />
+              <p>
+                Address. {row.address}, {row.city} , {row.state}
+              </p>
+
               <div>
                 <Button
                   color="primary"
                   round
                   onClick={() => {
-                    appointment(row._id);
+                    donation(row._id);
                   }}
                 >
-                  Book Appointment
+                  Donate Now
                 </Button>
 
                 <Dialog
@@ -224,7 +227,11 @@ export default function Cards() {
                     >
                       <Close className={classes.modalClose} />
                     </IconButton>
-                    <h4 className={classes.modalTitle}>Book Appointment</h4>
+                    <h4 className={classes.modalTitle}>
+                      You are donating for a good cause.Please fill the form to
+                      receive an Appreciation letter from Heatlh Care team with
+                      all the details shortly.{" "}
+                    </h4>
                   </DialogTitle>
                   <DialogContent
                     id="modal-slide-description"
@@ -253,11 +260,18 @@ export default function Cards() {
                         id="standard-basic"
                         label="Phone No."
                         name="phone"
-                        value={userdata.phonel}
+                        value={userdata.phone}
+                        onChange={handleInputs}
+                      />
+                      <TextField
+                        id="standard-basic"
+                        label="Amount."
+                        type="number"
+                        name="amount"
+                        value={userdata.amount}
                         onChange={handleInputs}
                       />
                     </form>
-                    <h5>Are you sure you want to do this?</h5>
                   </DialogContent>
                   <DialogActions
                     className={
@@ -265,7 +279,7 @@ export default function Cards() {
                     }
                   >
                     <Button onClick={PostData} color="success">
-                      Confirm
+                      Submit
                     </Button>
                   </DialogActions>
                 </Dialog>
@@ -274,6 +288,29 @@ export default function Cards() {
           </Card>
         ))}
       </div>
+
+      {/* <div>
+        <CardBody>
+          {" "}
+          <h3>Total Doctor Available {totaldr}</h3>{" "}
+        </CardBody>
+        {userlist.map((row) => (
+          <Card className={classes.textCenter}>
+            <CardHeader color="danger">
+              {" "}
+              <h3>SPECIALISATION:{row.specialist}</h3>
+            </CardHeader>
+            <CardBody>
+              <h1 className={classes.cardTitle}>Dr.{row.name}</h1>
+              <p>Consulting Time: {row.timing}</p>
+              <p>Address: {row.address}</p>
+              <p>Contact No.: {row.phone}</p>
+              <p>Email: {row.email}</p>
+              <Button color="primary">Book Appointment </Button>
+            </CardBody>
+          </Card>
+        ))}
+      </div> */}
     </div>
   );
 }

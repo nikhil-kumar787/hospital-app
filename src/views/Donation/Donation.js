@@ -16,14 +16,14 @@ import GridItem from "../../components/Grid/GridItem.js";
 import HeaderLinks from "../../components/Header/HeaderLinks.js";
 import NavPills from "../../components/NavPills/NavPills.js";
 import Parallax from "../../components/Parallax/Parallax.js";
-import "./Doctor.css";
+import "./Donation.css";
 
 import styles from "../../assets/jss/material-kit-react/views/profilePage.js";
-import Cards from "./Cards.js";
+import Donationcards from "./Donationcards.js";
 
 const useStyles = makeStyles(styles);
 
-export default function Doctor(props) {
+export default function Donation(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const imageClasses = classNames(
@@ -76,9 +76,23 @@ export default function Doctor(props) {
               <GridItem xs={90} sm={80} md={40} className={classes.navWrapper}>
                 <div className="Card">
                   <div className="child">
+                    <Donationcards />
+                  </div>
+                  {/* <div className="child">
                     <Cards />
                   </div>
-                 
+                  <div className="child">
+                    <Cards />
+                  </div>
+                  <div className="child">
+                    <Cards />
+                  </div>
+                  <div className="child">
+                    <Cards />
+                  </div>
+                  <div className="child">
+                    <Cards />
+                  </div> */}
                 </div>
               </GridItem>
             </GridContainer>

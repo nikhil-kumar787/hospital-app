@@ -16,14 +16,12 @@ import GridItem from "../../components/Grid/GridItem.js";
 import HeaderLinks from "../../components/Header/HeaderLinks.js";
 import NavPills from "../../components/NavPills/NavPills.js";
 import Parallax from "../../components/Parallax/Parallax.js";
-import "./Doctor.css";
-
+import Profilecard from "./Profilecard";
 import styles from "../../assets/jss/material-kit-react/views/profilePage.js";
-import Cards from "./Cards.js";
 
 const useStyles = makeStyles(styles);
 
-export default function Doctor(props) {
+export default function Profile(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const imageClasses = classNames(
@@ -54,31 +52,12 @@ export default function Doctor(props) {
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div>
           <div className={classes.container}>
-            <GridContainer justify="center">
-              <GridItem xs={12} sm={12} md={6}>
-                <div className={classes.profile}>
-                  <div className={classes.name}>
-                    <Button justIcon link className={classes.margin5}>
-                      <i className={"fab fa-twitter"} />
-                    </Button>
-                    <Button justIcon link className={classes.margin5}>
-                      <i className={"fab fa-instagram"} />
-                    </Button>
-                    <Button justIcon link className={classes.margin5}>
-                      <i className={"fab fa-facebook"} />
-                    </Button>
-                  </div>
-                </div>
-              </GridItem>
-            </GridContainer>
+            <GridContainer justify="center"></GridContainer>
 
             <GridContainer>
               <GridItem xs={90} sm={80} md={40} className={classes.navWrapper}>
                 <div className="Card">
-                  <div className="child">
-                    <Cards />
-                  </div>
-                 
+                  <Profilecard />
                 </div>
               </GridItem>
             </GridContainer>

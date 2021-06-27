@@ -24,12 +24,10 @@ export default function ProductSection() {
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={8}>
           <h2 className={classes.title}>Welcome,</h2>
-          <h5 className={classes.description}>
-            Thank you, for being the part of Health Care family.We are happy to
-            serve you. This are the list of services we provide to our family.We
-            don't think you as our Users,instead we address you as our family
-            and we will always try to serve you with better and fast services.
-          </h5>
+          <h3 className={classes.description}>
+            These are the valuable services that we provide to our Health Care
+            family.
+          </h3>
         </GridItem>
       </GridContainer>
       <div>

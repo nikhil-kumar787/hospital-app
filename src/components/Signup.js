@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import {
   Grid,
   Paper,
@@ -7,6 +7,7 @@ import {
   Typography,
   TextField,
   Button,
+  Link,
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import Radio from "@material-ui/core/Radio";
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Signupuser() {
+  const history = useHistory();
   const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
   const headerStyle = { margin: 0 };
   const avatarStyle = { backgroundColor: "#1bbd7e" };
@@ -59,18 +61,6 @@ export default function Signupuser() {
   };
 
   const [drcategory, setDrcategory] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const req = await Axios.get(
-        "https://capstone-health.herokuapp.com/category/getcategory"
-      );
-
-      setDrcategory(req.data.categoryList);
-      setLen(req.data.categoryList.length);
-    }
-
-    fetchData();
-  }, []);
   console.log(typeof drcategory[0]);
   console.log(drcategory.length);
 
@@ -110,7 +100,8 @@ export default function Signupuser() {
           setIsingnup(true);
           console.log(res.data);
           window.alert("Successfully signup");
-          <Redirect to="/login" />;
+          history.push("/login");
+          // <Redirect to="/login" />;
         })
         .catch((err) => {
           window.alert("Email id is already Exist");
@@ -214,6 +205,10 @@ export default function Signupuser() {
             Sign up
           </Button>
         </form>
+        <Typography>
+          {" "}
+          Do you have an account ?<Link href="/login">Log in</Link>
+        </Typography>
       </Paper>
     </Grid>
   );
