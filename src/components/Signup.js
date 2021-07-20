@@ -1,215 +1,214 @@
-import React, { useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-import {
-  Grid,
-  Paper,
-  Avatar,
-  Typography,
-  TextField,
-  Button,
-  Link,
-} from "@material-ui/core";
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import { makeStyles } from "@material-ui/core/styles";
-import Select from "@material-ui/core/Select";
+import React, { Component } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { NotificationManager } from 'react-notifications';
+import { CircularProgress } from '@material-ui/core';
 
-import Axios from "axios";
-// import axios from "../axios";
+import axios from 'axios';
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    display: "block",
-    marginTop: theme.spacing(2),
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 290,
-  },
-}));
 
-export default function Signupuser() {
-  const history = useHistory();
-  const paperStyle = { padding: "30px 20px", width: 300, margin: "20px auto" };
-  const headerStyle = { margin: 0 };
-  const avatarStyle = { backgroundColor: "#1bbd7e" };
-  const marginTop = { marginTop: 5 };
 
-  const classes = useStyles();
-  const [age, setAge] = React.useState("");
-  const [len, setLen] = React.useState("");
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        '& > *': {
+            margin: theme.spacing(1),
+            width: theme.spacing(100),
+            height: theme.spacing(60),
+        },
+    },
+    paper: {
+        marginTop: theme.spacing(8),
+        marginLeft: theme.spacing(3),
+        marginRight: theme.spacing(3),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+});
 
-  const [open, setOpen] = React.useState(false);
+class Signup extends Component {
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const [drcategory, setDrcategory] = useState([]);
-  console.log(typeof drcategory[0]);
-  console.log(drcategory.length);
-
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    category: "",
-  });
-
-  const [issignup, setIsingnup] = useState();
-
-  let name, value;
-  const handleInputs = (e) => {
-    console.log(e);
-    name = e.target.name;
-    value = e.target.value;
-    console.log(value);
-    console.log(name);
-
-    setUser({ ...user, [name]: value }); //// will take the name from line 15
-  };
-  console.log(user);
-  const PostData = async (e) => {
-    e.preventDefault();
-
-    const { name, email, password, category } = user;
-    try {
-      await Axios.post("https://capstone-health.herokuapp.com/user/signup", {
-        name,
-        email,
-        password,
-        category,
-      })
-        .then((res) => {
-          console.log(res);
-          setIsingnup(true);
-          console.log(res.data);
-          window.alert("Successfully signup");
-          history.push("/login");
-          // <Redirect to="/login" />;
-        })
-        .catch((err) => {
-          window.alert("Email id is already Exist");
-        });
-    } catch (err) {
-      window.alert(err);
+    constructor() {
+        super();
+        this.state = {
+            email: '',
+            password: '',
+            loading: false
+        };
     }
-  };
 
-  // render(){
+    onChange = e => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
 
-  //   console.log(issignup);
-  //   if (issignup) {
-  //     return <Redirect to="/login" />;
-  //   }
+    onSubmit = e => {
+        e.preventDefault();
+        this.setState({ loading: true })
+        setTimeout(() => {
+            this.setState({ loading: false })
+        }, 2000)
+        // const data = {
+        //     email: this.state.email,
+        //     password: this.state.password
 
-  return (
-    <Grid>
-      <Paper elevation={20} style={paperStyle}>
-        <Grid align="center">
-          <Avatar style={avatarStyle}>
-            <AddCircleOutlineOutlinedIcon />
-          </Avatar>
-          <h2 style={headerStyle}>Sign Up</h2>
-          <Typography variant="caption" gutterBottom>
-            Please fill this form to create an account !
-          </Typography>
-        </Grid>
-        <form>
-          <TextField
-            fullWidth
-            label="Name"
-            placeholder="Enter your name"
-            name="name"
-            value={user.name}
-            onChange={handleInputs}
-          />
-          <TextField
-            fullWidth
-            label="Email"
-            placeholder="Enter your email"
-            name="email"
-            value={user.email}
-            onChange={handleInputs}
-          />
+        // };
+        const { email, password } = this.state;
 
-          <TextField
-            fullWidth
-            label="Password"
-            placeholder="Enter your password"
-            type="password"
-            name="password"
-            value={user.password}
-            onChange={handleInputs}
-          />
-          {/* <TextField
-            fullWidth
-            label="Category"
-            placeholder="Enter your Category"
-            name="category"
-            value={user.category}
-            onChange={handleInputs}
-          /> */}
-          {/* <FormControl className={classes.formControl}>
-            <InputLabel id="demo-controlled-open-select-label">
-              Category
-            </InputLabel>
+        axios
+            .post('http://localhost:5000/register', { email, password })
+            .then(res => {
+                this.setState({
+                    email: '',
+                    password: '',
+                })
+                this.props.history.push('/forward');
+                NotificationManager.success('User Registered Successfully!'," ", 2000);
+            })
+            .catch(err => {
 
-            <Select
-              labelId="demo-controlled-open-select-label"
-              id="demo-controlled-open-select"
-              open={open}
-              onClose={handleClose}
-              onOpen={handleOpen}
-              value={age}
-              onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
+                NotificationManager.error('Error while Creating new User!', 'Error!');
+            })
+    }
+    render() {
+      const { classes } = this.props;
+      function Copyright() {
+          return (
+              <Typography variant="body2" color="inherit" align="center">
+                  {'Copyright © '}
+                  <Link color="inherit" href="/">
+                      Todo App
+                  </Link>{' '}
+                  {new Date().getFullYear()}
+                  {'.'}
+              </Typography>
+          );
+      }
 
-              {/* {drcategory.map((cate, index) => (
-                <MenuItem value={index}>{drcategory[0]}</MenuItem>
-              ))} */}
-          {/* <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem> 
-              <MenuItem value={30}>Thirty</MenuItem> */}
-          {/* </Select>
-          </FormControl> */}
-          <FormControlLabel
-            control={<Checkbox name="checkedA" />}
-            label="I accept the terms and conditions."
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            href="/login"
-            onClick={PostData}
-          >
-            Sign up
-          </Button>
-        </form>
-        <Typography>
-          {" "}
-          Do you have an account ?<Link href="/login">Log in</Link>
-        </Typography>
-      </Paper>
-    </Grid>
-  );
+      const { loading } = this.state
+
+
+
+      return (
+
+          <Container component="main" maxWidth="xs">
+              <CssBaseline />
+              <div className={classes.root}>
+                  <Paper elevation={3} >
+                      <div className={classes.paper}>
+                          <Avatar className={classes.avatar}>
+                              <PersonAddIcon />
+                          </Avatar>
+                          <Typography component="h1" variant="h5">
+                              Sign up
+                          </Typography>
+                          <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+                              <Grid container spacing={2}>
+                                  {/* <Grid item xs={12} sm={6}>
+                          <TextField
+                              autoComplete="fname"
+                              name="firstName"
+                              variant="outlined"
+                              required
+                              fullWidth
+                              id="firstName"
+                              label="First Name"
+                              autoFocus
+                          />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                          <TextField
+                              variant="outlined"
+                              required
+                              fullWidth
+                              id="lastName"
+                              label="Last Name"
+                              name="lastName"
+                              autoComplete="lname"
+                          />
+                      </Grid> */}
+                                  <Grid item xs={12}>
+                                      <TextField
+                                          variant="filled"
+                                          required
+                                          fullWidth
+                                          id="email"
+                                          label="Email Address"
+                                          name="email"
+                                          autoComplete="email"
+                                          value={this.state.email}
+                                          onChange={this.onChange}
+                                      />
+                                  </Grid>
+                                  <Grid item xs={12}>
+                                      <TextField
+                                          variant="filled"
+                                          required
+                                          fullWidth
+                                          name="password"
+                                          label="Password"
+                                          type="password"
+                                          id="password"
+                                          autoComplete="current-password"
+                                          value={this.state.password}
+                                          onChange={this.onChange}
+                                      />
+                                  </Grid>
+                              
+                              </Grid>
+                              <Button
+                                  type="submit"
+                                  fullWidth
+                                  variant="contained"
+                                  color="primary"
+                                  className={classes.submit}
+                                  onClick={this.onSubmit} disabled={loading}
+                                 
+                              >
+                                   {loading && <CircularProgress size={14} />}
+                                  {!loading && 'Sign up'}
+                              </Button>
+                            
+                              <Grid container justifyContent="flex-end">
+                                  <Grid item>
+                                      <Link href="#" variant="body2">
+                                          Already have an account? Sign in
+                                      </Link>
+                                  </Grid>
+                              </Grid>
+                          </form>
+                      </div>
+                  </Paper>
+              </div>
+              <Box mt={5}>
+                  <Copyright />
+              </Box>
+          </Container>
+      )
+
+  }
+
 }
+export default withStyles(styles, { withTheme: true })(Signup);

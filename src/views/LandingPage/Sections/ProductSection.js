@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -14,16 +14,53 @@ import InfoArea from "../../../components/InfoArea/InfoArea.js";
 import styles from "../../../assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles(styles);
 
 export default function ProductSection() {
   const classes = useStyles();
+  const [user, setUser] = useState({
+    name: "",
+    phone: "",
+    city: "",
+    state: "",
+    address: "",
+  });
+
+
+  useEffect(() => {
+    async function fetchData() {
+      
+      let mytoken = localStorage.getItem("token");
+      let userId = localStorage.getItem("userId");
+      
+      const headers = {
+        Authorization: `Bearer ${mytoken}`,
+        "My-Custom-Header": "foobar",
+      };
+      const req = await axios.get(
+        `https://capstone-health.herokuapp.com/user/data/${userId}`,
+        { headers }
+      );
+      // console.log(req.data.data);
+      setUser(req.data.data);
+      // setUser(req.data.data);
+     
+    }
+
+    fetchData();
+  }, []) ;console.log(user)
+
   return (
+    <>
+    
     <div className={classes.section}>
+      
       <GridContainer justify="center">
+      
         <GridItem xs={12} sm={12} md={8}>
-          <h2 className={classes.title}>Welcome,</h2>
+          <h2 className={classes.title}>Welcome,{user.name}</h2>
           <h5 className={classes.description}>
             Thank you, for being the part of Health Care family.We are happy to
             serve you. This are the list of services we provide to our family.We
@@ -31,6 +68,7 @@ export default function ProductSection() {
             and we will always try to serve you with better and fast services.
           </h5>
         </GridItem>
+        
       </GridContainer>
       <div>
         <GridContainer>
@@ -78,6 +116,9 @@ export default function ProductSection() {
           </GridItem>
         </GridContainer>
       </div>
+      
     </div>
+
+    </>
   );
 }

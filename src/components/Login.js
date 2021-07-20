@@ -1,144 +1,220 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import Axios from "axios";
-import {
-  Grid,
-  Paper,
-  Avatar,
-  TextField,
-  Button,
-  Typography,
-  Link,
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import React, { Component } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import { NotificationManager } from 'react-notifications';
+import { CircularProgress } from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-export default class Login extends React.Component {
-  constructor() {
-    super();
-    let loggedIn = false;
+import axios from 'axios';
 
-    const token = localStorage.getItem("token");
-    // if(token) {
-    //     loggedIn = true
-    // }
-    this.state = {
-      email: "",
-      password: "",
-      loggedIn,
-      error: "",
-    };
-    this.onChange = this.onChange.bind(this);
-    this.formSubmit = this.formSubmit.bind(this);
-  }
 
-  onChange(ev) {
-    this.setState({
-      [ev.target.name]: ev.target.value,
-    });
-  }
 
-  async formSubmit(ev) {
-    ev.preventDefault();
-    const { email, password } = this.state;
-    try {
-      const token = await Axios.post(
-        "https://capstone-health.herokuapp.com/user/login",
-        { email, password }
-      );
-      let usertoken = token.data.token;
-      let userid = token.data._id;
-      // console.log(usertoken);
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        '& > *': {
+            margin: theme.spacing(1),
+            width: theme.spacing(60),
+            height: theme.spacing(55),
+        },
+    },
+    paper: {
+        marginTop: theme.spacing(8),
+        marginLeft: theme.spacing(3),
+        marginRight: theme.spacing(3),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.primary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(3),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+});
 
-      // console.log(token.data._id);
+class Login extends Component {
+    
 
-      console.log(userid);
-      localStorage.setItem("token", usertoken);
-      localStorage.setItem("userId", userid);
-      this.setState({
-        loggedIn: true,
-      });
-    } catch (err) {
-      this.setState({
-        error: err.message,
-      });
-    }
-  }
-
-  render() {
-    console.log(localStorage.getItem("token"));
-    console.log(this.state.loggedIn);
-    if (this.state.loggedIn) {
-      return <Redirect to="/home" />;
+    constructor() {
+        super();
+        let loggedIn = false;
+        this.state = {
+            email: '',
+            password: '',
+            loading: false,
+            loggedIn,
+        };
     }
 
-    const paperStyle = {
-      padding: 20,
-      height: "45vh",
-      width: 280,
-      margin: "20px auto",
+    onChange = e => {
+        this.setState({ [e.target.name]: e.target.value });
     };
-    const avatarStyle = { backgroundColor: "#1bbd7e" };
-    const btnstyle = { margin: "8px 0" };
 
-    return (
-      <form onSubmit={this.formSubmit}>
-        <Grid>
-          <Paper elevation={10} style={paperStyle}>
-            <Grid align="center">
-              <Avatar style={avatarStyle}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <h2>Sign In</h2>
-            </Grid>
+     onSubmit = e => {
+        e.preventDefault();
+        this.setState({ loading: true })
+        setTimeout(() => {
+            this.setState({ loading: false })
+        }, 2000)
+        // const data = {
+        //     email: this.state.email,
+        //     password: this.state.password
 
-            <TextField
-              label="email"
-              placeholder="Enter email"
-              fullWidth
-              required
-              value={this.state.email}
-              onChange={this.onChange}
-              name="email"
-            />
-            <TextField
-              label="password"
-              placeholder="Enter password"
-              type="password"
-              fullWidth
-              required
-              value={this.state.password}
-              onChange={this.onChange}
-              name="password"
-            />
+        // };
+        var usertoken
+        var userid 
+        const { email, password } = this.state;
 
-            <FormControlLabel
-              control={<Checkbox name="checkedB" color="primary" />}
-              label="Remember me"
-            />
+          axios
+            .post('https://capstone-health.herokuapp.com/user/login', { email, password })
+            .then(res => {
+                // console.log(res.data.token)
+                //  usertoken = res.data.token;
+                //  userid = res.data._id;
+                 localStorage.setItem("token", res.data.token);
+            localStorage.setItem("userId", res.data._id);
+                //  console.log(usertoken)
+                this.setState({
 
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              style={btnstyle}
-              fullWidth
-            >
-              Sign in
-            </Button>
-            {this.state.error}
+                    loggedIn: true,
+                })
+                NotificationManager.success('Login Successful!', '', 2000);
+                this.props.history.push('/home');
+                
+            })
+            .catch(err => {
 
-            <Typography>
-              <Link href="#">Forgot password ?</Link>
-            </Typography>
-            <Typography>
-              {" "}
-              Don't you have an account ?<Link href="/signup">Sign Up</Link>
-            </Typography>
-          </Paper>
-        </Grid>
-      </form>
-    );
-  }
+                NotificationManager.error('Please check your email and password!');
+            })
+            // console.log(token)
+            // this.setState({
+            //     loggedIn: true,
+            //   });
+            // console.log(usertoken,userid)
+           
+            // localStorage.setItem("token", usertoken);
+            // localStorage.setItem("userId", userid);
+    }
+
+
+
+
+
+    render() {
+        const { classes } = this.props;
+        function Copyright() {
+            return (
+                <Typography variant="body1" color="inherit" align="center">
+                    {'Copyright © '}
+                    <Link color="inherit" href="https://material-ui.com/">
+                        The Health Care App
+                    </Link>{' '}
+                    {new Date().getFullYear()}
+                    {'.'}
+                </Typography>
+            );
+        }
+
+        const { loading } = this.state
+
+
+
+        return (
+
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.root}>
+                    <Paper elevation={3} >
+                        <div className={classes.paper}>
+                            <Avatar className={classes.avatar}>
+                                <AccountCircleIcon  />
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Sign in
+                            </Typography>
+                            <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+                                <Grid container spacing={2}>
+                                 
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            id="email"
+                                            label="Email Address"
+                                            name="email"
+                                            autoComplete="email"
+                                            value={this.state.email}
+                                            onChange={this.onChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            name="password"
+                                            label="Password"
+                                            type="password"
+                                            id="password"
+                                            autoComplete="current-password"
+                                            value={this.state.password}
+                                            onChange={this.onChange}
+                                        />
+                                    </Grid>
+
+                                </Grid>
+                                <Button
+                                    type="submit"
+                                    
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                    onClick={this.onSubmit} disabled={loading}
+
+                                >
+                                    {loading && <CircularProgress size={30} />}
+                                    {!loading && 'Sign in'}
+                                </Button>
+
+                                <Grid container justifyContent="flex-end">
+                                    <Grid item>
+                                        <Link href="/signup" variant="body2">
+                                            Don't have an account? <Button variant="contained" color="primary" href="/signup">
+                                                Sign Up
+                                            </Button>
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                            </form>
+                        </div>
+                    </Paper>
+                </div>
+                <Box mt={5}>
+                    <Copyright />
+                </Box>
+            </Container>
+        )
+
+    }
+
 }
+export default withStyles(styles, { withTheme: true })(Login);

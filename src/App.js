@@ -1,6 +1,8 @@
 import React, { Profiler } from "react";
 import "./App.css";
 import Login from "./components/Login";
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Logout from "./components/Logout";
@@ -53,6 +55,7 @@ function App() {
 
           <Route path="/loginpage" component={LoginPage} />
         </Switch>
+        <NotificationContainer />
       </Router>
       {/* </header> */}
     </div>

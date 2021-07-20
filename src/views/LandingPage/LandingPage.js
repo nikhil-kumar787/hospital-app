@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
 
 // @material-ui/icons
 
@@ -30,6 +31,38 @@ const useStyles = makeStyles(styles);
 
 export default function LandingPage(props) {
   const classes = useStyles();
+  const [user, setUser] = useState({
+    name: "",
+    phone: "",
+    city: "",
+    state: "",
+    address: "",
+  });
+  
+  
+  useEffect(() => {
+    async function fetchData() {
+      
+      let mytoken = localStorage.getItem("token");
+      let userId = localStorage.getItem("userId");
+      
+      const headers = {
+        Authorization: `Bearer ${mytoken}`,
+        "My-Custom-Header": "foobar",
+      };
+      const req = await axios.get(
+        `https://capstone-health.herokuapp.com/user/data/${userId}`,
+        { headers }
+      );
+      // console.log(req.data.data);
+      setUser(req.data.data);
+      // setUser(req.data.data);
+     
+    }
+  
+    fetchData();
+  }, []) ;
+  
   const { ...rest } = props;
   return (
     <div>
@@ -54,7 +87,7 @@ export default function LandingPage(props) {
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
               <h1 className={classes.title}>
-                Your Health is Our Responsibility
+                "{user.name}"Your, Health is Our Responsibility
               </h1>
               <h4>
                 We care for you, that's why we have brought a new Health Care
